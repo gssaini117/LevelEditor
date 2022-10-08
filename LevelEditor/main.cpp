@@ -18,22 +18,27 @@ void render(RenderWindow& window);
 
 // globals
 const int NUM_OF_TILES = 21;
+int currIndex = 0;
 //Image IMAGES[NUM_OF_TILES];
 Texture TILES[NUM_OF_TILES];
+Sprite currTile;
 
 int main()
 {
-    RenderWindow window(sf::VideoMode(1050, 700), "Level Editor");
+    RenderWindow window(VideoMode(1050, 700), "Level Editor");
     loadTileset();
 
     // game loop
     while (window.isOpen())
     {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event))
         {
             handleInput(window, event);
         }
+
+        //cout << Mouse.getPosition(window).x << " " << Mouse.getPosition(window).y << endl;
+        cout << currIndex << endl;
 
         update(window);
         render(window);
@@ -53,17 +58,22 @@ void loadTileset() {
 }
 
 void handleInput(RenderWindow& window, Event& e) {
-    if (e.type == sf::Event::Closed)
-        window.close();
+    if (e.type == Event::Closed) window.close();
 
-
+    // changes current tile index based on left or right key press
+    if (e.type == Event::KeyReleased && e.key.code == Keyboard::Left) 
+        if (--currIndex < 0) currIndex = NUM_OF_TILES - 1;
+    if (e.type == Event::KeyReleased && e.key.code == Keyboard::Right)
+        ++currIndex %= NUM_OF_TILES;
 }
 
 void update(RenderWindow& window) {
-
+    currTile.setTexture(TILES[currIndex]);
+    //currTile.setPosition(Mouse.getPosition(window).x, Mouse.getPosition(window).y);
 }
 
 void render(RenderWindow& window) {
     window.clear();
+    window.draw(currTile);
     window.display();
 }
