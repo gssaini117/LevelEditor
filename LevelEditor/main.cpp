@@ -19,7 +19,7 @@ void render(RenderWindow& window);
 // globals
 const int NUM_OF_TILES = 21;
 int currIndex = 0;
-//Image IMAGES[NUM_OF_TILES];
+
 Texture TILES[NUM_OF_TILES];
 Sprite currTile;
 
@@ -36,9 +36,6 @@ int main()
         {
             handleInput(window, event);
         }
-
-        //cout << Mouse.getPosition(window).x << " " << Mouse.getPosition(window).y << endl;
-        cout << currIndex << endl;
 
         update(window);
         render(window);
@@ -69,7 +66,7 @@ void handleInput(RenderWindow& window, Event& e) {
 
 void update(RenderWindow& window) {
     currTile.setTexture(TILES[currIndex]);
-    //currTile.setPosition(Mouse.getPosition(window).x, Mouse.getPosition(window).y);
+    currTile.setPosition(Mouse::getPosition(window).x - 35, Mouse::getPosition(window).y - 35);
 }
 
 void render(RenderWindow& window) {
