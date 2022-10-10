@@ -90,7 +90,27 @@ void handleInput(RenderWindow& window, Event& e) {
         texture.create(window.getSize().x, window.getSize().y);
         texture.update(window);
         if (texture.copyToImage().saveToFile("LevelScreenshot.png")) {
-            cout << "Screenshot of level saved." << endl;
+            cout << "Screenshot of Level Saved." << endl;
+        }
+    }
+
+    // left click to place tile, right click to remove tile
+    if (Mouse::isButtonPressed(Mouse::Left)) {
+        int mouseGridX = Mouse::getPosition(window).x / 70;
+        int mouseGridY = Mouse::getPosition(window).y / 70;
+        if (mouseGridX >= 0 && mouseGridX < 15) {
+            if (mouseGridY >= 0 && mouseGridY < 10) {
+                GRID[mouseGridY][mouseGridX] = currIndex;
+            }
+        }
+    }
+    if (Mouse::isButtonPressed(Mouse::Right)) {
+        int mouseGridX = Mouse::getPosition(window).x / 70;
+        int mouseGridY = Mouse::getPosition(window).y / 70;
+        if (mouseGridX >= 0 && mouseGridX < 15) {
+            if (mouseGridY >= 0 && mouseGridY < 10) {
+                GRID[mouseGridY][mouseGridX] = -1;
+            }
         }
     }
 }
@@ -109,7 +129,7 @@ void saveLevel() {
         }
         cout << "Level Saved!\n";
     }
-    else cout << "Error creating save file." << endl;  
+    else cout << "error creating save file." << endl;  
     level.close();
 }
 
@@ -125,7 +145,7 @@ void loadLevel() {
         }
         cout << "Level Loaded!\n";
     }
-    else cout << "Error loading save file." << endl;
+    else cout << "error loading save file." << endl;
     level.close();
 }
 
