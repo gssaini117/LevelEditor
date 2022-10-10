@@ -1,3 +1,9 @@
+/*
+* Programmed by Gurkirat Saini
+* 10/10/2022
+* GAME-230
+*/
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
