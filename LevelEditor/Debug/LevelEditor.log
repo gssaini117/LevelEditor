@@ -1,4 +1,6 @@
 ﻿  main.cpp
-C:\Users\gurki\OneDrive\Documents\LevelEditor\LevelEditor\main.cpp(108,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\gurki\OneDrive\Documents\LevelEditor\LevelEditor\main.cpp(108,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gurki\OneDrive\Documents\LevelEditor\LevelEditor\main.cpp(135,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gurki\OneDrive\Documents\LevelEditor\LevelEditor\main.cpp(135,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gurki\OneDrive\Documents\LevelEditor\LevelEditor\main.cpp(150,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\gurki\OneDrive\Documents\LevelEditor\LevelEditor\main.cpp(150,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   LevelEditor.vcxproj -> C:\Users\gurki\OneDrive\Documents\LevelEditor\LevelEditor\Debug\LevelEditor.exe

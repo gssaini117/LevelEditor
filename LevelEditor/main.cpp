@@ -20,6 +20,7 @@ void saveLevel();
 void loadLevel();
 void update(RenderWindow& window);
 void render(RenderWindow& window);
+void renderGrid(RenderWindow& window);
 
 // globals
 const int NUM_OF_TILES = 21;
@@ -76,11 +77,22 @@ void handleInput(RenderWindow& window, Event& e) {
         if (--currIndex < 0) currIndex = NUM_OF_TILES - 1;
     if (e.type == Event::KeyReleased && e.key.code == Keyboard::Right)
         ++currIndex %= NUM_OF_TILES;
+
     // save or load level
-    if (e.type == Event::KeyReleased && e.key.code == Keyboard::Down)
+    if (e.type == Event::KeyReleased && e.key.code == Keyboard::S)
         saveLevel();
-    if (e.type == Event::KeyReleased && e.key.code == Keyboard::Up)
+    if (e.type == Event::KeyReleased && e.key.code == Keyboard::L)
         loadLevel();
+
+    // save screenshot of level
+    if (e.type == Event::KeyReleased && e.key.code == Keyboard::Space) {
+        Texture texture;
+        texture.create(window.getSize().x, window.getSize().y);
+        texture.update(window);
+        if (texture.copyToImage().saveToFile("LevelScreenshot.png")) {
+            cout << "Screenshot of level saved." << endl;
+        }
+    }
 }
 
 // Exports level to a text file
@@ -90,24 +102,31 @@ void saveLevel() {
         for (int i = 0; i < sizeof GRID / sizeof GRID[0]; i++) {
             for (int j = 0; j < sizeof GRID[0] / sizeof(int); j++) {
                 if (j == sizeof GRID[0] / sizeof(int) - 1)
-                    level << endl;
+                    level << GRID[i][j] << endl;
                 else 
                     level << GRID[i][j] << " ";
             }
         }
+        cout << "Level Saved!\n";
     }
-    else cout << "Problem creating save file" << endl;  
+    else cout << "Error creating save file." << endl;  
     level.close();
 }
 
 // Imports saved level from a text file
 void loadLevel() {
-    int i = 0, j = 0;
-    string row;
+    string tile;
     ifstream level("level.txt");
-    while (getline(level, row)) {
-        // read file row space by space and save each int to GRID
+    if (level.is_open()) {
+        for (int i = 0; i < sizeof GRID / sizeof GRID[0]; i++) {
+            for (int j = 0; j < sizeof GRID[0] / sizeof(int); j++) {
+                level >> GRID[i][j];
+            }
+        }
+        cout << "Level Loaded!\n";
     }
+    else cout << "Error loading save file." << endl;
+    level.close();
 }
 
 void update(RenderWindow& window) {
@@ -118,6 +137,19 @@ void update(RenderWindow& window) {
 
 void render(RenderWindow& window) {
     window.clear();
+    renderGrid(window);
     window.draw(currTile);
     window.display();
+}
+
+void renderGrid(RenderWindow& window) {
+    for (int i = 0; i < sizeof GRID / sizeof GRID[0]; i++) {
+        for (int j = 0; j < sizeof GRID[0] / sizeof(int); j++) {
+            Sprite temp;
+            temp.setTexture(TILES[GRID[i][j]]);
+            temp.setPosition(j*70, i*70);
+            if (GRID[i][j] >= 0)
+                window.draw(temp);
+        }
+    }
 }
